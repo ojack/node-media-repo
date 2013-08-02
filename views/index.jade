@@ -1,0 +1,25 @@
+extend layout
+
+block content
+  h1 Visitor Feedback Prompts
+    - each article in articles
+      div.article
+        div.title
+          a(href="/"+article._id)!= article.title
+        div.body= article.body
+  form.form-horizontal( method="post")
+    .form-group
+        label.col-lg-2.control-label(for='inputPrompt') Add New Prompt
+        .col-lg-10
+          input#inputPrompt.form-control(type='text', placeholder='Prompt', name="title", id="editArticleTitle")
+    button.btn.btn-default(type='submit', value="Send") Add
+    div
+        input.form-control(type='text', placeholder='Add New Prompt', name="title", id="editArticleTitle")
+        div
+            span Title :
+            input(type="text", name="title", id="editArticleTitle")
+        div
+            span Body :
+            textarea( name="body", rows=20, id="editArticleBody")
+        div#editArticleSubmit
+            input(type="submit", value="Send")

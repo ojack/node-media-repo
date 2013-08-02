@@ -1,0 +1,32 @@
+extend layout
+
+block content
+  img(src= "images/09d31a2b5f04ad62cdaf1a20332f8696.jpg")
+  h1= title
+  div.article
+    div.created_at= article.created_at
+    div.title= article.title
+    div.body= article.body
+    div
+      form(method="post", enctype="multipart/form-data", action="/file-upload/"+article._id)
+        input(type="file", name="file", multiple="multiple", value=article._id.toHexString())
+        input(type="submit")
+      form( method="post", action="/blog/addComment")
+        input( type="hidden", name="_id", value=article._id.toHexString())
+        div
+          span Author :
+          input( type="text", name="person", id="addCommentPerson")
+        div
+          span Comment :
+          textarea( name="comment", rows=5, id="addCommentComment")
+        div#editArticleSubmit
+          input(type="submit", value="Send")
+    - each comment in article.comments
+      div.comment
+        div.person= comment.person
+        div.comment= comment.comment
+    - each imgPath in article.imgPaths
+      div.imgPath
+        img(src= imgPath.path)
+        div.imgPath= imgPath.path
+    

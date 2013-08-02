@@ -1,0 +1,35 @@
+!!! 5
+html
+  head
+    link(rel='stylesheet', href='/stylesheets/blueimp-gallery.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    title Hello
+  body
+    h1=article.title
+    div
+      form(method="post", enctype="multipart/form-data", action="/file-upload/"+article._id)
+        input(type="file", name="file", multiple="multiple", value=article._id.toHexString())
+        input(type="submit")
+    #blueimp-gallery.blueimp-gallery
+      .slides
+      h3.title
+      a.prev ‹
+      a.next ›
+      a.close ×
+      a.play-pause
+      ol.indicator
+    #links
+      - each imgPath in article.imgPaths
+        a(href=imgPath.path, title=article.title)
+          img(src=imgPath.thumbPath, alt='Banana')
+    script(src='js/blueimp-gallery.min.js')
+    script(src='js/bootstrap.min.js')
+    script.
+      document.getElementById('links').onclick = function (event) {
+      event = event || window.event;
+      var target = event.target || event.srcElement,
+      link = target.src ? target.parentNode : target,
+      options = {index: link, event: event},
+      links = this.getElementsByTagName('a');
+      blueimp.Gallery(links, options);
+      };
